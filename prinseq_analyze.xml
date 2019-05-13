@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<tool id="prinseq_analyze" name="Sequence analyzer" version="1.0">
+        <!--<description>Get a summary of the sequence data.</description>-->
+        <requirements>
+              <requirement type="package">prinseq</requirement>
+      	</requirements>
+
+        <!-- collect the parameters and provide these to the wrapper script -->
+        <command>
+		<![CDATA[
+                bash '$__tool_directory__/prinseq_analyze.sh'
+		$input_type.input_format
+		#if $input_type.input_format == "hist"
+			$input_type.hist_select.seq_format
+			$input_type.hist_select.input_file
+			$output_seq
+		#else
+			$input_type.seq_format
+			$input_type.input_file
+			$output_zip
+		#end if
+		]]>
+	</command>
+
+	<macros>
+		<!-- macro of sequence type select -->
+		<macro name="format">
+			<param name="seq_format" type="select" label="File in FASTA or FASTQ format?">
+				<option value="-fasta">FASTA</option>
+				<option value="-fastq" selected="true">FASTQ</option>
+			</param>
+		</macro>
+	</macros>
+
+	<inputs>
+		<!-- selection of the input type (zip / hist) and files -->
+		<conditional name="input_type">
+			<param name="input_format" type="select" label="Single file or ZIP archive?">
+				<option value="hist">Single file</option>
+				<option value="zip">ZIP archive</option>
+			</param>
+			<when value="hist">
+				<conditional name="hist_select">
+					<expand macro="format"/>
+					<when value="-fasta">
+						<param name="input_file" type="data" format="fasta" label="FASTA Sequence file" help="FASTA file." />
+					</when>
+					<when value="-fastq">
+						<param name="input_file" type="data" format="fastq" label="FASTQ Sequence file" help="FASTQ file." />
+					</when>
+				</conditional>
+			</when>
+			<when value="zip">
+				<expand macro="format" />
+				<param name="input_file" type="data" format="zip" label="ZIP file" help="ZIP file containing the sequences." />
+			</when>
+		</conditional>
+	</inputs>
+
+	<outputs>
+		<!-- set the output name based on the input type provided by the user -->
+                <data format="html" name="output_seq" label="$input_type.hist_select.input_file.display_name Graphs" >
+			<filter>input_type['input_format'] != "zip"</filter>
+		</data>
+		<data format="html" name="output_zip" label="$input_type.input_file.display_name Graphs" >
+			<filter>input_type['input_format'] == "zip"</filter>
+		</data>
+	</outputs>
+
+	<tests>
+	</tests>
+	
+	<help>
+		Use PRINSEQ to analyze a set of sequenes (FASTQ or FASTA format). The tool will produce a HTML report that contains detailed information about the input sequences, this data can be used for more accurate filtering of the input data. Note: If a ZIP file is provided only the first 25k sequences per file will be used for the analysis in order to reduce computational time.
+
+		Reference: Schmieder R and Edwards R. Quality control and preprocessing of metagenomic datasets. *Bioinformatics* 2011, **27**:863-864. 
+	</help>
+
+</tool>
