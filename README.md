@@ -9,3 +9,7 @@ cd /home/galaxy/Tools
 ```
 git clone https://github.com/naturalis/galaxy-tool-prinseq-sequence-analysis 
 ```
+Add the following line to /home/galaxy/galaxy/config/tool_conf.xml
+```
+<tool file="/home/galaxy/Tools/galaxy-tool-prinseq-sequence-analysis/prinseq_analyze.xml" />
+```
