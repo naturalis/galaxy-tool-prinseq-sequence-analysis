@@ -2,6 +2,10 @@
 Prinseq sequence analysis tool for galaxy (transferred from old galaxy). The original github page can be found here: https://github.com/naturalis/Galaxy-Pipeline
 ## Getting Started
 ### Prerequisites
+make
+```
+sudo apt-get install build-essential
+```
 perl JSON module
 ```
 sudo cpan JSON
