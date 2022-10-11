@@ -1,14 +1,19 @@
 <?xml version="1.0"?>
 <tool id="prinseq_analyze" name="Sequence analyzer" version="1.0">
-        <!--<description>Get a summary of the sequence data.</description>-->
-        <requirements>
-              <requirement type="package">prinseq</requirement>
-      	</requirements>
+<!-- <description>Get a summary of the sequence data.</description> -->
 
-        <!-- collect the parameters and provide these to the wrapper script -->
-        <command>
+		<!-- no Conda alternative available for "sudo cpan Statistics::PCA" -->
+		<requirements>
+			<requirement type="package" version="5.22.0">perl</requirement>
+			<requirement type="package" version="2.90">perl-json</requirement>
+			<requirement type="package" version="1.106">perl-cairo</requirement>
+			<requirement type="package" version="0.20.4">prinseq</requirement>
+		</requirements>
+
+		<!-- collect the parameters and provide these to the wrapper script -->
+		<command>
 		<![CDATA[
-                bash '$__tool_directory__/prinseq_analyze.sh'
+		bash '$__tool_directory__/prinseq_analyze.sh'
 		$input_type.input_format
 		#if $input_type.input_format == "hist"
 			$input_type.hist_select.seq_format
@@ -59,7 +64,7 @@
 
 	<outputs>
 		<!-- set the output name based on the input type provided by the user -->
-                <data format="html" name="output_seq" label="$input_type.hist_select.input_file.display_name Graphs" >
+		<data format="html" name="output_seq" label="$input_type.hist_select.input_file.display_name Graphs" >
 			<filter>input_type['input_format'] != "zip"</filter>
 		</data>
 		<data format="html" name="output_zip" label="$input_type.input_file.display_name Graphs" >
