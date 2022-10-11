@@ -1,7 +1,12 @@
 #!/bin/bash
 
+# sanity check
+printf "Conda env: $CONDA_DEFAULT_ENV\n"
+echo "Perl: "$(perl -v | head -n2 | tail -n1 | awk -F"(" '{print $2}' | awk -F")" '{print $1}')
+echo "Perl location: "$(which perl)
+
+
 # if the user submitted a ZIP file
-which perl
 if [ "$1" == "zip" ]
 then
 	# Set read headers
@@ -13,8 +18,8 @@ then
 	fi
 
 	# set temp file for read output
-        #temp=$(mktemp /media/GalaxyData/database/files/XXXXXX)
-	temp=$(mktemp /home/galaxy/galaxy/database/XXXXXX)
+    # temp=$(mktemp /home/galaxy/galaxy/database/XXXXXX)
+	temp=$(mktemp /data/files/XXXXXX)
 
 	IFS=$'\n'
 	# parse through the list zipped files
@@ -34,7 +39,8 @@ then
 
 	# run the prinseq tools on the temp file
 	prinseq-lite.pl "$2" $temp -out_good null -out_bad null -graph_data "$4" > /dev/null 2>&1
-	prinseq-graphs.pl -i "$4" -html_all -o "$4"
+	# PCA plots dropped due to unavailability of perl module in Conda:
+	prinseq-graphs-noPCA.pl -i "$4" -html_all -o "$4"	
 
 	# move and remove the output and temp file
 	mv "${4}.html" "$4"
@@ -43,7 +49,8 @@ then
 else
 	# run the prinseq tools
 	prinseq-lite.pl "$2" "$3" -out_good null -out_bad null -graph_data "$4" > /dev/null 2>&1
-	prinseq-graphs.pl -i "$4" -html_all -o "$4"
+	# PCA plots dropped due to unavailability of perl module in Conda:
+	prinseq-graphs-noPCA.pl -i "$4" -html_all -o "$4"	
 	# move the output files to the expected paths
 	mv "${4}.html" "$4"
 fi
