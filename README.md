@@ -1,34 +1,24 @@
 # galaxy-tool-prinseq-sequence-analysis
-Prinseq sequence analysis tool for galaxy (transferred from old galaxy). The original github page can be found here: https://github.com/naturalis/Galaxy-Pipeline
-## Getting Started
-### Prerequisites
-make
-```
-sudo apt-get install build-essential
-```
-perl JSON module
-```
-sudo cpan JSON
-```
-perl Cairo module
-```
-sudo apt-get install pkg-config
-sudo apt-get install libcairo2-dev libjpeg-dev libgif-dev
-sudo cpan Cairo
-```
-perl Statistics::PCA 
-```
-sudo cpan Statistics::PCA
-```
-### Installing
-Installing the tool for use in Galaxy
-```
-cd /home/galaxy/Tools
-```
-```
-git clone https://github.com/naturalis/galaxy-tool-prinseq-sequence-analysis 
-```
-Add the following line to /home/galaxy/galaxy/config/tool_conf.xml
-```
-<tool file="/home/galaxy/Tools/galaxy-tool-prinseq-sequence-analysis/prinseq_analyze.xml" />
-```
+Generate summary statistics (both textual and graphical) of sequence data.  
+
+This version no longer includes a PCA plot because no conda package exists  
+for the previous implementation (perl Statistics::PCA)
+
+## Installation
+### Manual  
+Clone this repo in your Galaxy ***Tools*** directory:  
+`git clone https://github.com/naturalis/galaxy-tool-prinseq-sequence-analysis`  
+
+Make sure the script is executable:  
+`chmod 755 galaxy-tool-prinseq-sequence-analysis/prinseq_analyze.sh`  
+
+Append the file ***tool_conf.xml***:    
+`<tool file="/path/to/Tools/galaxy-tool-prinseq-sequence-analysis/prinseq_analyze.xml" />`  
+
+### Ansible
+Depending on your setup the [ansible.builtin.git](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html) module could be used.  
+[Install the tool](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html#examples) by including the following in your dedicated ***.yml** file:  
+
+`  - repo: https://github.com/naturalis/galaxy-tool-prinseq-sequence-analysis`  
+&ensp;&ensp;`prinseq_analyze.xml`  
+&ensp;&ensp;`version: master`  
