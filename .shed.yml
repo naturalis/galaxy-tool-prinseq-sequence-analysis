@@ -1,0 +1,13 @@
+name: naturalis_prinseq_sequence_analysis
+owner:  luka
+description: "Generate summary statistics (both textual and graphical) of sequence data." 
+long_description: |
+  "Generate summary statistics (both textual and graphical) of sequence data.".
+remote_repository_url: https://github.com/naturalis/galaxy-tool-prinseq-sequence-analysis.git
+homepage_url: https://github.com/naturalis/galaxy-tool-prinseq-sequence-analysis.git
+type: unrestricted
+categories:
+   - Sequence analysis
+auto_tool_repositories:
+  name_template: naturalis_prinseq_sequence_analysis
+  description_template: naturalis_prinseq_sequence_analysis
