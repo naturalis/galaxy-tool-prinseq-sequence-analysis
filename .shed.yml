@@ -7,7 +7,7 @@ remote_repository_url: https://github.com/naturalis/galaxy-tool-prinseq-sequence
 homepage_url: https://github.com/naturalis/galaxy-tool-prinseq-sequence-analysis.git
 type: unrestricted
 categories:
-   - Sequence analysis
+   - Metagenomics
 auto_tool_repositories:
   name_template: naturalis_prinseq_sequence_analysis
   description_template: naturalis_prinseq_sequence_analysis
